@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +9,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+
+from dotenv import load_dotenv, dotenv_values
 
 '''
 Red underlines? Install the required packages first: 
@@ -20,15 +24,16 @@ pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
 '''
-
-
-MOVIE_DB_API_KEY = "7b08fbe65ee8ff1ee6bb0fb583d516c4"
+load_dotenv()
+print(os.environ.get("MOVIE_DB_API_KEY"))
+print(os.environ.get("APP_CONFIG_KEY"))
+MOVIE_DB_API_KEY = os.environ.get("MOVIE_DB_API_KEY")
 MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DB_INFO_URL = "https://api.themoviedb.org/3/movie"
 MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("APP_CONFIG_KEY")
 Bootstrap5(app)
 
 # CREATE DB
